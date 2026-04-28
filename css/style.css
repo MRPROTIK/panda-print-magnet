@@ -761,3 +761,33 @@ textarea:focus-visible {
     display: none;
   }
 }
+
+/* ================================
+   Footer animations
+================================ */
+
+.footer-brand-col,
+.footer-col,
+.footer-newsletter,
+.footer-bottom {
+  animation: fadeUp 0.6s ease both;
+}
+
+.footer-col:nth-child(1) { animation-delay: 0.1s; }
+.footer-col:nth-child(2) { animation-delay: 0.2s; }
+.footer-col:nth-child(3) { animation-delay: 0.3s; }
+.footer-newsletter       { animation-delay: 0.15s; }
+.footer-bottom           { animation-delay: 0.25s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.social-btn {
+  animation: fadeUp 0.5s ease both;
+}
+
+.social-btn:nth-child(1) { animation-delay: 0.3s; }
+.social-btn:nth-child(2) { animation-delay: 0.4s; }
+.social-btn:nth-child(3) { animation-delay: 0.5s; }

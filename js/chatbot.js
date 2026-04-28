@@ -1,435 +1,166 @@
-/* ================================
-   Panda Print Magnets
-   Premium Chatbot — 10/10
-================================ */
+document.addEventListener("DOMContentLoaded", function() {
+  var chatbotHTML = '<button id="chat-toggle" class="chat-toggle" aria-label="Open chat" type="button">'
+    + '<span class="chat-pulse"></span>'
+    + '<svg width="26" height="26" viewBox="0 0 24 24" fill="none">'
+    + '<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    + '</svg>'
+    + '</button>'
+    + '<div id="chat-box" class="chat-box" role="dialog" aria-label="Panda Print Magnets chat">'
+    + '<div class="chat-header">'
+    + '<div class="chat-agent">'
+    + '<div class="agent-avatar">'
+    + '<svg width="24" height="24" viewBox="0 0 24 24" fill="none">'
+    + '<circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.8"/>'
+    + '<circle cx="9" cy="10.5" r="1.4" fill="white"/>'
+    + '<circle cx="15" cy="10.5" r="1.4" fill="white"/>'
+    + '<path d="M8.5 14.5c1.5 1.5 5.5 1.5 7 0" stroke="white" stroke-width="1.8" stroke-linecap="round"/>'
+    + '</svg>'
+    + '</div>'
+    + '<div class="agent-info">'
+    + '<strong>Panda Assistant</strong>'
+    + '<small><span class="online-dot"></span> Online now</small>'
+    + '</div>'
+    + '</div>'
+    + '<button id="chat-close" type="button" aria-label="Close chat">&#x2715;</button>'
+    + '</div>'
+    + '<div id="chat-messages" class="chat-messages">'
+    + '<div class="chat-message bot">Hi there! I am Panda Assistant. I can help you with pricing, ordering, bulk magnets, delivery, and more.</div>'
+    + '<div class="quick-replies">'
+    + '<button type="button" data-question="What are your prices?">Pricing</button>'
+    + '<button type="button" data-question="How do I place an order?">How to order</button>'
+    + '<button type="button" data-question="Do you offer bulk orders?">Bulk orders</button>'
+    + '<button type="button" data-question="How long does delivery take?">Delivery</button>'
+    + '</div>'
+    + '</div>'
+    + '<div class="chat-input-area">'
+    + '<input id="chat-input" type="text" placeholder="Ask me anything..." autocomplete="off" />'
+    + '<button id="chat-send" type="button" aria-label="Send message">'
+    + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none">'
+    + '<path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    + '</svg>'
+    + '</button>'
+    + '</div>'
+    + '</div>';
 
-/* Toggle Button */
+  document.body.insertAdjacentHTML("beforeend", chatbotHTML);
 
-.chat-toggle {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  z-index: 999;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #7c3aed, #22d3ee);
-  box-shadow:
-    0 8px 32px rgba(124,58,237,0.5),
-    0 0 0 0 rgba(34,211,238,0.4);
-  animation: chatPulse 2.8s ease-in-out infinite;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: none;
-}
+  var toggleBtn = document.querySelector("#chat-toggle");
+  var chatBox = document.querySelector("#chat-box");
+  var closeBtn = document.querySelector("#chat-close");
+  var sendBtn = document.querySelector("#chat-send");
+  var input = document.querySelector("#chat-input");
+  var messages = document.querySelector("#chat-messages");
 
-.chat-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 14px 44px rgba(124,58,237,0.65), 0 0 0 8px rgba(34,211,238,0.12);
-}
+  toggleBtn.addEventListener("click", function() {
+    var isOpen = chatBox.classList.toggle("active");
+    if (isOpen) {
+      var badge = toggleBtn.querySelector(".chat-badge");
+      if (badge) badge.remove();
+      toggleBtn.classList.remove("attention");
+      setTimeout(function() { input.focus(); }, 100);
+    }
+  });
 
-.chat-toggle svg { z-index: 2; flex-shrink: 0; }
+  closeBtn.addEventListener("click", function() {
+    chatBox.classList.remove("active");
+  });
 
-@keyframes chatPulse {
-  0%, 100% { box-shadow: 0 8px 32px rgba(124,58,237,0.5), 0 0 0 0 rgba(34,211,238,0.35); }
-  50% { box-shadow: 0 8px 32px rgba(124,58,237,0.5), 0 0 0 10px rgba(34,211,238,0); }
-}
+  sendBtn.addEventListener("click", sendMessage);
 
-/* Notification badge */
+  input.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+  });
 
-.chat-badge {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #f43f5e;
-  border: 2px solid #020617;
-  font-size: 0.65rem;
-  font-weight: 900;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
-}
+  document.querySelectorAll(".quick-replies button").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      input.value = btn.dataset.question;
+      sendMessage();
+    });
+  });
 
-@keyframes badgePop {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+  setTimeout(function() {
+    if (!chatBox.classList.contains("active")) {
+      var badge = document.createElement("span");
+      badge.className = "chat-badge";
+      badge.textContent = "1";
+      toggleBtn.appendChild(badge);
+      toggleBtn.classList.add("attention");
+    }
+  }, 4000);
 
-/* Chat Box */
-
-.chat-box {
-  position: fixed;
-  bottom: 104px;
-  right: 28px;
-  width: 370px;
-  height: 540px;
-  border-radius: 28px;
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 998;
-  background: rgba(6,10,22,0.97);
-  border: 1px solid rgba(103,232,249,0.18);
-  box-shadow:
-    0 40px 100px rgba(0,0,0,0.7),
-    0 0 0 1px rgba(255,255,255,0.04),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-  transform: translateY(16px) scale(0.97);
-  opacity: 0;
-  transition: transform 0.35s cubic-bezier(0.34,1.2,0.64,1), opacity 0.3s ease;
-}
-
-.chat-box.active {
-  display: flex;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-/* Header */
-
-.chat-header {
-  position: relative;
-  padding: 18px 18px 16px;
-  background: linear-gradient(135deg, #5b21b6 0%, #0e7490 100%);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.chat-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(124,58,237,0.6), rgba(34,211,238,0.4));
-  mix-blend-mode: overlay;
-}
-
-.chat-header::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: -10px;
-  right: -10px;
-  height: 40px;
-  background: rgba(6,10,22,0.97);
-  border-radius: 50%;
-  filter: blur(6px);
-}
-
-.chat-header-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.chat-agent {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.agent-avatar {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  border: 2px solid rgba(255,255,255,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1.4rem;
-}
-
-.agent-status-dot {
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #22c55e;
-  border: 2px solid #0e7490;
-  animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.agent-info strong {
-  display: block;
-  color: #fff;
-  font-size: 0.98rem;
-  font-weight: 900;
-  letter-spacing: 0.01em;
-}
-
-.agent-info small {
-  color: rgba(255,255,255,0.78);
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-
-.chat-close-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.14);
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-
-.chat-close-btn:hover { background: rgba(255,255,255,0.26); }
-
-/* Messages Area */
-
-.chat-messages {
-  flex: 1;
-  padding: 18px 16px 12px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(103,232,249,0.2) transparent;
-}
-
-.chat-messages::-webkit-scrollbar {
-  width: 4px;
-}
-
-.chat-messages::-webkit-scrollbar-track { background: transparent; }
-.chat-messages::-webkit-scrollbar-thumb {
-  background: rgba(103,232,249,0.2);
-  border-radius: 999px;
-}
-
-/* Message Bubbles */
-
-.chat-message {
-  max-width: 82%;
-  padding: 11px 15px;
-  border-radius: 18px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  animation: msgSlide 0.3s cubic-bezier(0.34,1.2,0.64,1) both;
-}
-
-@keyframes msgSlide {
-  from { opacity: 0; transform: translateY(10px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.chat-message.bot {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.09);
-  color: #e2e8f0;
-  border-bottom-left-radius: 6px;
-  align-self: flex-start;
-}
-
-.chat-message.user {
-  background: linear-gradient(135deg, #6d28d9, #0891b2);
-  color: #fff;
-  border-bottom-right-radius: 6px;
-  align-self: flex-end;
-  box-shadow: 0 6px 20px rgba(109,40,217,0.35);
-}
-
-/* Bot message with avatar */
-
-.bot-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  align-self: flex-start;
-  max-width: 88%;
-}
-
-.bot-avatar-sm {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #7c3aed, #22d3ee);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  flex-shrink: 0;
-  margin-bottom: 2px;
-}
-
-.bot-row .chat-message.bot {
-  max-width: 100%;
-}
-
-/* Timestamp */
-
-.msg-time {
-  font-size: 0.7rem;
-  color: rgba(148,163,184,0.6);
-  margin-top: 2px;
-  padding: 0 4px;
-}
-
-.msg-time.right { text-align: right; align-self: flex-end; }
-.msg-time.left { align-self: flex-start; padding-left: 36px; }
-
-/* Typing Indicator */
-
-.typing-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  align-self: flex-start;
-}
-
-.typing-bubble {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 18px;
-  border-bottom-left-radius: 6px;
-  padding: 12px 16px;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-
-.typing-bubble span {
-  display: block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(103,232,249,0.6);
-  animation: typingDot 1.3s ease-in-out infinite;
-}
-
-.typing-bubble span:nth-child(2) { animation-delay: 0.18s; }
-.typing-bubble span:nth-child(3) { animation-delay: 0.36s; }
-
-@keyframes typingDot {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-  30% { transform: translateY(-5px); opacity: 1; }
-}
-
-/* Quick Replies */
-
-.quick-replies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  padding: 0 16px 12px;
-  flex-shrink: 0;
-}
-
-.quick-replies button {
-  border: 1px solid rgba(103,232,249,0.3);
-  padding: 7px 13px;
-  border-radius: 999px;
-  background: rgba(103,232,249,0.07);
-  color: #67e8f9;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 750;
-  transition: background 0.2s, transform 0.2s, border-color 0.2s;
-  white-space: nowrap;
-}
-
-.quick-replies button:hover {
-  background: rgba(103,232,249,0.18);
-  border-color: rgba(103,232,249,0.55);
-  transform: translateY(-2px);
-}
-
-/* Input Area */
-
-.chat-input-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  background: rgba(255,255,255,0.03);
-  flex-shrink: 0;
-}
-
-.chat-input-area input {
-  flex: 1;
-  padding: 11px 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.06);
-  color: #f8fafc;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.chat-input-area input::placeholder {
-  color: rgba(148,163,184,0.6);
-}
-
-.chat-input-area input:focus {
-  border-color: rgba(34,211,238,0.45);
-  background: rgba(255,255,255,0.09);
-}
-
-.chat-send-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: linear-gradient(135deg, #7c3aed, #22d3ee);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 6px 20px rgba(124,58,237,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.chat-send-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 10px 28px rgba(124,58,237,0.55);
-}
-
-/* Mobile adjustments */
-
-@media (max-width: 480px) {
-  .chat-box {
-    width: calc(100vw - 24px);
-    right: 12px;
-    bottom: 96px;
-    height: 72vh;
-    max-height: 520px;
-    border-radius: 24px;
+  function sendMessage() {
+    var text = input.value.trim();
+    if (!text) return;
+    addMessage("user", text);
+    input.value = "";
+    showTyping();
+    setTimeout(function() {
+      removeTyping();
+      addMessage("bot", getReply(text));
+    }, 800);
   }
 
-  .chat-toggle {
-    right: 16px;
-    bottom: 20px;
-    width: 56px;
-    height: 56px;
+  function addMessage(type, text) {
+    var div = document.createElement("div");
+    div.className = "chat-message " + type;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
   }
-}
+
+  function showTyping() {
+    var typing = document.createElement("div");
+    typing.className = "chat-message bot typing";
+    typing.id = "typing-indicator";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function removeTyping() {
+    var el = document.querySelector("#typing-indicator");
+    if (el) el.remove();
+  }
+
+  function getReply(msg) {
+    var m = msg.toLowerCase();
+
+    if (/^(hi|hello|hey|howdy|sup|yo)\b/.test(m)) {
+      return "Hey there! Great to hear from you. I can help with pricing, ordering, bulk requests, and more. What do you need?";
+    }
+    if (m.indexOf("price") > -1 || m.indexOf("cost") > -1 || m.indexOf("how much") > -1 || m.indexOf("pricing") > -1) {
+      return "Our magnets start from: Classic Magnet $9.99, Collage Magnet $14.99, Event Magnet $19.99. Bulk pricing is available for 50+ orders!";
+    }
+    if (m.indexOf("bulk") > -1 || m.indexOf("wholesale") > -1 || m.indexOf("large order") > -1) {
+      return "Yes! We handle bulk orders for weddings, schools, businesses, and events. Minimum 50 magnets. Visit our Bulk Orders page for a custom quote.";
+    }
+    if (m.indexOf("order") > -1 || m.indexOf("buy") > -1 || m.indexOf("purchase") > -1) {
+      return "Ordering is simple: go to the Magnets page, choose your style, click Customize, upload your photo, add to cart, then complete checkout!";
+    }
+    if (m.indexOf("deliver") > -1 || m.indexOf("shipping") > -1 || m.indexOf("how long") > -1) {
+      return "Shipping is calculated at checkout based on your location and order size. Bulk orders get clear delivery timelines when you request a quote.";
+    }
+    if (m.indexOf("photo") > -1 || m.indexOf("upload") > -1 || m.indexOf("picture") > -1) {
+      return "You upload your photo during checkout. We recommend high-resolution images for the best print quality.";
+    }
+    if (m.indexOf("custom") > -1 || m.indexOf("design") > -1) {
+      return "All our magnets are fully custom! Add text, choose layouts, and upload any photo. Design support included with bulk orders.";
+    }
+    if (m.indexOf("wedding") > -1 || m.indexOf("birthday") > -1 || m.indexOf("event") > -1 || m.indexOf("party") > -1) {
+      return "Event magnets are our specialty! Weddings, birthdays, corporate events, school programs, and more. Check our Events page!";
+    }
+    if (m.indexOf("quality") > -1 || m.indexOf("glossy") > -1 || m.indexOf("finish") > -1) {
+      return "All magnets have a premium glossy finish and strong magnetic backing. Built to last!";
+    }
+    if (m.indexOf("refund") > -1 || m.indexOf("return") > -1 || m.indexOf("guarantee") > -1) {
+      return "If something is not right with your order, we will make it right. That is the Panda Promise!";
+    }
+    if (m.indexOf("contact") > -1 || m.indexOf("human") > -1 || m.indexOf("support") > -1) {
+      return "Use the Contact link in our footer or request a quote on the Bulk Orders page. Our team will reply quickly!";
+    }
+    if (m.indexOf("thank") > -1 || m.indexOf("great") > -1 || m.indexOf("awesome") > -1) {
+      return "You are welcome! Is there anything else I can help you with?";
+    }
+    return "I can help with pricing, ordering, bulk requests, photo upload, delivery, or event magnets. What would you like to know?";
+  }
+});

@@ -1,370 +1,435 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* ================================
+   Panda Print Magnets
+   Premium Chatbot — 10/10
+================================ */
 
-  const chatbotHTML = `
-    <button id="chat-toggle" class="chat-toggle" aria-label="Open chat">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z"
-          stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span class="chat-badge" id="chat-badge">1</span>
-    </button>
+/* Toggle Button */
 
-    <div id="chat-box" class="chat-box" role="dialog" aria-label="Panda Print chat">
-      <div class="chat-header">
-        <div class="chat-header-inner">
-          <div class="chat-agent">
-            <div class="agent-avatar">
-              🐼
-              <span class="agent-status-dot"></span>
-            </div>
-            <div class="agent-info">
-              <strong>Panda Assistant</strong>
-              <small>🟢 Online — replies instantly</small>
-            </div>
-          </div>
-          <button id="chat-close" class="chat-close-btn" type="button" aria-label="Close chat">✕</button>
-        </div>
-      </div>
+.chat-toggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  z-index: 999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7c3aed, #22d3ee);
+  box-shadow:
+    0 8px 32px rgba(124,58,237,0.5),
+    0 0 0 0 rgba(34,211,238,0.4);
+  animation: chatPulse 2.8s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: none;
+}
 
-      <div id="chat-messages" class="chat-messages"></div>
+.chat-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 14px 44px rgba(124,58,237,0.65), 0 0 0 8px rgba(34,211,238,0.12);
+}
 
-      <div id="quick-replies-container" class="quick-replies"></div>
+.chat-toggle svg { z-index: 2; flex-shrink: 0; }
 
-      <div class="chat-input-area">
-        <input id="chat-input" type="text" placeholder="Ask me anything..." autocomplete="off" />
-        <button id="chat-send" class="chat-send-btn" type="button" aria-label="Send message">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M22 2L11 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  `;
+@keyframes chatPulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(124,58,237,0.5), 0 0 0 0 rgba(34,211,238,0.35); }
+  50% { box-shadow: 0 8px 32px rgba(124,58,237,0.5), 0 0 0 10px rgba(34,211,238,0); }
+}
 
-  document.body.insertAdjacentHTML("beforeend", chatbotHTML);
+/* Notification badge */
 
-  const toggleBtn  = document.querySelector("#chat-toggle");
-  const chatBox    = document.querySelector("#chat-box");
-  const closeBtn   = document.querySelector("#chat-close");
-  const sendBtn    = document.querySelector("#chat-send");
-  const input      = document.querySelector("#chat-input");
-  const messages   = document.querySelector("#chat-messages");
-  const qrContainer = document.querySelector("#quick-replies-container");
-  const badge      = document.querySelector("#chat-badge");
+.chat-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f43f5e;
+  border: 2px solid #020617;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
 
-  let chatOpened = false;
+@keyframes badgePop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-  // ── Open / Close ──────────────────────────────────────
+/* Chat Box */
 
-  function openChat() {
-    chatBox.classList.add("active");
-    if (badge) badge.remove();
-    if (!chatOpened) {
-      chatOpened = true;
-      showWelcome();
-    }
-    setTimeout(() => input.focus(), 300);
+.chat-box {
+  position: fixed;
+  bottom: 104px;
+  right: 28px;
+  width: 370px;
+  height: 540px;
+  border-radius: 28px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 998;
+  background: rgba(6,10,22,0.97);
+  border: 1px solid rgba(103,232,249,0.18);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  transform: translateY(16px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.34,1.2,0.64,1), opacity 0.3s ease;
+}
+
+.chat-box.active {
+  display: flex;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Header */
+
+.chat-header {
+  position: relative;
+  padding: 18px 18px 16px;
+  background: linear-gradient(135deg, #5b21b6 0%, #0e7490 100%);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.chat-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124,58,237,0.6), rgba(34,211,238,0.4));
+  mix-blend-mode: overlay;
+}
+
+.chat-header::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: -10px;
+  right: -10px;
+  height: 40px;
+  background: rgba(6,10,22,0.97);
+  border-radius: 50%;
+  filter: blur(6px);
+}
+
+.chat-header-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-agent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.agent-avatar {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.4rem;
+}
+
+.agent-status-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid #0e7490;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.agent-info strong {
+  display: block;
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.agent-info small {
+  color: rgba(255,255,255,0.78);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.chat-close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.chat-close-btn:hover { background: rgba(255,255,255,0.26); }
+
+/* Messages Area */
+
+.chat-messages {
+  flex: 1;
+  padding: 18px 16px 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(103,232,249,0.2) transparent;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(103,232,249,0.2);
+  border-radius: 999px;
+}
+
+/* Message Bubbles */
+
+.chat-message {
+  max-width: 82%;
+  padding: 11px 15px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  animation: msgSlide 0.3s cubic-bezier(0.34,1.2,0.64,1) both;
+}
+
+@keyframes msgSlide {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-message.bot {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: #e2e8f0;
+  border-bottom-left-radius: 6px;
+  align-self: flex-start;
+}
+
+.chat-message.user {
+  background: linear-gradient(135deg, #6d28d9, #0891b2);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+  align-self: flex-end;
+  box-shadow: 0 6px 20px rgba(109,40,217,0.35);
+}
+
+/* Bot message with avatar */
+
+.bot-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  align-self: flex-start;
+  max-width: 88%;
+}
+
+.bot-avatar-sm {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #22d3ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.bot-row .chat-message.bot {
+  max-width: 100%;
+}
+
+/* Timestamp */
+
+.msg-time {
+  font-size: 0.7rem;
+  color: rgba(148,163,184,0.6);
+  margin-top: 2px;
+  padding: 0 4px;
+}
+
+.msg-time.right { text-align: right; align-self: flex-end; }
+.msg-time.left { align-self: flex-start; padding-left: 36px; }
+
+/* Typing Indicator */
+
+.typing-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  align-self: flex-start;
+}
+
+.typing-bubble {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 18px;
+  border-bottom-left-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.typing-bubble span {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(103,232,249,0.6);
+  animation: typingDot 1.3s ease-in-out infinite;
+}
+
+.typing-bubble span:nth-child(2) { animation-delay: 0.18s; }
+.typing-bubble span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Quick Replies */
+
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 0 16px 12px;
+  flex-shrink: 0;
+}
+
+.quick-replies button {
+  border: 1px solid rgba(103,232,249,0.3);
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(103,232,249,0.07);
+  color: #67e8f9;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 750;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.quick-replies button:hover {
+  background: rgba(103,232,249,0.18);
+  border-color: rgba(103,232,249,0.55);
+  transform: translateY(-2px);
+}
+
+/* Input Area */
+
+.chat-input-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.03);
+  flex-shrink: 0;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  color: #f8fafc;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.chat-input-area input::placeholder {
+  color: rgba(148,163,184,0.6);
+}
+
+.chat-input-area input:focus {
+  border-color: rgba(34,211,238,0.45);
+  background: rgba(255,255,255,0.09);
+}
+
+.chat-send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #7c3aed, #22d3ee);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.chat-send-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 28px rgba(124,58,237,0.55);
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 480px) {
+  .chat-box {
+    width: calc(100vw - 24px);
+    right: 12px;
+    bottom: 96px;
+    height: 72vh;
+    max-height: 520px;
+    border-radius: 24px;
   }
 
-  function closeChat() {
-    chatBox.classList.remove("active");
+  .chat-toggle {
+    right: 16px;
+    bottom: 20px;
+    width: 56px;
+    height: 56px;
   }
-
-  toggleBtn.addEventListener("click", () => {
-    chatBox.classList.contains("active") ? closeChat() : openChat();
-  });
-
-  closeBtn.addEventListener("click", closeChat);
-
-  // ── Welcome flow ──────────────────────────────────────
-
-  function showWelcome() {
-    setTimeout(() => {
-      addBotMessage("Hi there! 👋 Welcome to **Panda Print Magnets**.");
-    }, 200);
-
-    setTimeout(() => {
-      addBotMessage("I can help you with pricing, custom magnets, bulk orders, shipping, and more. What can I help you with today?");
-      showQuickReplies([
-        "💰 Pricing",
-        "🧲 Magnet types",
-        "📦 Bulk orders",
-        "🚚 Shipping",
-        "📸 How to order",
-        "🤝 Contact us",
-      ]);
-    }, 900);
-  }
-
-  // ── Quick Replies ─────────────────────────────────────
-
-  function showQuickReplies(options) {
-    qrContainer.innerHTML = "";
-    options.forEach(label => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.textContent = label;
-      btn.addEventListener("click", () => {
-        qrContainer.innerHTML = "";
-        addUserMessage(label);
-        handleReply(label);
-      });
-      qrContainer.appendChild(btn);
-    });
-  }
-
-  // ── Add messages ──────────────────────────────────────
-
-  function addBotMessage(text, followUpOptions) {
-    const row = document.createElement("div");
-    row.className = "bot-row";
-
-    const avatarEl = document.createElement("div");
-    avatarEl.className = "bot-avatar-sm";
-    avatarEl.textContent = "🐼";
-
-    const bubble = document.createElement("div");
-    bubble.className = "chat-message bot";
-    bubble.innerHTML = formatText(text);
-
-    row.appendChild(avatarEl);
-    row.appendChild(bubble);
-    messages.appendChild(row);
-
-    const timeEl = document.createElement("div");
-    timeEl.className = "msg-time left";
-    timeEl.textContent = getTime();
-    messages.appendChild(timeEl);
-
-    scrollDown();
-
-    if (followUpOptions) {
-      showQuickReplies(followUpOptions);
-    }
-  }
-
-  function addUserMessage(text) {
-    const bubble = document.createElement("div");
-    bubble.className = "chat-message user";
-    bubble.textContent = text;
-    messages.appendChild(bubble);
-
-    const timeEl = document.createElement("div");
-    timeEl.className = "msg-time right";
-    timeEl.textContent = getTime();
-    messages.appendChild(timeEl);
-
-    scrollDown();
-  }
-
-  function formatText(text) {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\n/g, "<br>");
-  }
-
-  function getTime() {
-    return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  }
-
-  function scrollDown() {
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  // ── Typing indicator ──────────────────────────────────
-
-  function showTyping() {
-    const row = document.createElement("div");
-    row.className = "typing-row";
-    row.id = "typing-indicator";
-
-    const avatarEl = document.createElement("div");
-    avatarEl.className = "bot-avatar-sm";
-    avatarEl.textContent = "🐼";
-
-    const bubble = document.createElement("div");
-    bubble.className = "typing-bubble";
-    bubble.innerHTML = "<span></span><span></span><span></span>";
-
-    row.appendChild(avatarEl);
-    row.appendChild(bubble);
-    messages.appendChild(row);
-    scrollDown();
-  }
-
-  function removeTyping() {
-    const el = document.querySelector("#typing-indicator");
-    if (el) el.remove();
-  }
-
-  // ── Send message ──────────────────────────────────────
-
-  function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
-
-    qrContainer.innerHTML = "";
-    addUserMessage(text);
-    input.value = "";
-
-    showTyping();
-
-    setTimeout(() => {
-      removeTyping();
-      handleReply(text);
-    }, 950);
-  }
-
-  sendBtn.addEventListener("click", sendMessage);
-  input.addEventListener("keypress", e => {
-    if (e.key === "Enter") sendMessage();
-  });
-
-  // ── Reply logic ───────────────────────────────────────
-
-  function handleReply(msg) {
-    const m = msg.toLowerCase();
-
-    // Pricing
-    if (m.includes("pric") || m.includes("cost") || m.includes("how much") || m.includes("💰")) {
-      addBotMessage(
-        "Here's our pricing:\n\n" +
-        "🧲 **Classic Magnet** — from $9.99\n" +
-        "🖼️ **Collage Magnet** — from $14.99\n" +
-        "🎉 **Event Magnet** — from $19.99\n\n" +
-        "Bulk orders of 50+ get volume discounts. The more you order, the better the price!",
-        ["📦 Bulk pricing", "📸 How to order", "🚚 Shipping info"]
-      );
-      return;
-    }
-
-    // Magnet types
-    if (m.includes("type") || m.includes("style") || m.includes("kind") || m.includes("magnet") || m.includes("🧲")) {
-      addBotMessage(
-        "We offer 3 main magnet styles:\n\n" +
-        "🧲 **Classic Magnet** — Clean, simple, perfect for everyday photos\n" +
-        "🖼️ **Collage Magnet** — Combine multiple photos in one design\n" +
-        "🎉 **Event Magnet** — Ideal for weddings, parties & celebrations\n\n" +
-        "All magnets have a premium glossy finish and strong magnetic backing.",
-        ["💰 See pricing", "📸 How to order", "📦 Bulk orders"]
-      );
-      return;
-    }
-
-    // Bulk orders
-    if (m.includes("bulk") || m.includes("event") || m.includes("wedding") || m.includes("school") || m.includes("business") || m.includes("📦")) {
-      addBotMessage(
-        "Yes! We love bulk orders 🎉\n\n" +
-        "Perfect for:\n" +
-        "💒 Weddings & save-the-dates\n" +
-        "🏫 Schools & fundraisers\n" +
-        "🏢 Corporate gifts & events\n" +
-        "🎊 Parties & celebrations\n\n" +
-        "**Minimum:** 50 magnets\n" +
-        "**Pricing:** Gets better the more you order\n\n" +
-        "Visit the Bulk Orders page to request a quote!",
-        ["💰 Pricing", "🚚 Shipping", "🤝 Contact us"]
-      );
-      return;
-    }
-
-    // Shipping / delivery
-    if (m.includes("ship") || m.includes("deliver") || m.includes("how long") || m.includes("arrival") || m.includes("🚚")) {
-      addBotMessage(
-        "🚚 **Shipping Info:**\n\n" +
-        "Shipping is calculated at checkout based on your location and order size.\n\n" +
-        "📦 Standard orders are typically processed within **2–3 business days** before shipping.\n\n" +
-        "For bulk/event orders, delivery timelines are confirmed when you request a quote so your magnets arrive on time!",
-        ["💰 Pricing", "📸 How to order", "🤝 Contact us"]
-      );
-      return;
-    }
-
-    // How to order
-    if (m.includes("order") || m.includes("buy") || m.includes("how do") || m.includes("start") || m.includes("📸")) {
-      addBotMessage(
-        "Ordering is super easy! Here's how:\n\n" +
-        "1️⃣ Go to the **Magnets** page\n" +
-        "2️⃣ Choose your magnet style\n" +
-        "3️⃣ Click **Customize** and fill in your details\n" +
-        "4️⃣ Upload your photo at checkout\n" +
-        "5️⃣ Add to cart and complete your order\n\n" +
-        "That's it! We handle the rest 🐼",
-        ["🧲 Magnet types", "💰 Pricing", "🚚 Shipping"]
-      );
-      return;
-    }
-
-    // Contact
-    if (m.includes("contact") || m.includes("talk") || m.includes("human") || m.includes("support") || m.includes("help") || m.includes("🤝")) {
-      addBotMessage(
-        "We'd love to hear from you! 💬\n\n" +
-        "For bulk orders or special requests, use the **Bulk Orders** page to send us your details and we'll get back to you quickly.\n\n" +
-        "For general questions, you can also check our **FAQs** page in the footer.",
-        ["📦 Bulk orders", "💰 Pricing", "📸 How to order"]
-      );
-      return;
-    }
-
-    // Quality
-    if (m.includes("quality") || m.includes("material") || m.includes("finish") || m.includes("durable") || m.includes("last")) {
-      addBotMessage(
-        "Our magnets are made to last! ✨\n\n" +
-        "✅ **Premium glossy finish** — vibrant colours that pop\n" +
-        "✅ **Strong magnetic backing** — stays on your fridge\n" +
-        "✅ **High-resolution printing** — crisp, detailed images\n" +
-        "✅ **Quality checked** — every order inspected before shipping",
-        ["💰 Pricing", "📸 How to order", "📦 Bulk orders"]
-      );
-      return;
-    }
-
-    // Photo upload
-    if (m.includes("photo") || m.includes("upload") || m.includes("image") || m.includes("picture")) {
-      addBotMessage(
-        "📸 **Photo Upload:**\n\n" +
-        "You upload your photo during the checkout process. Our system accepts JPG, PNG, and HEIC formats.\n\n" +
-        "**Tips for best results:**\n" +
-        "• Use a high-resolution photo (at least 1MB)\n" +
-        "• Good lighting makes colours pop\n" +
-        "• Landscape orientation works great for Classic magnets",
-        ["🧲 Magnet types", "📸 How to order", "💰 Pricing"]
-      );
-      return;
-    }
-
-    // Greetings
-    if (m.includes("hi") || m.includes("hello") || m.includes("hey") || m.includes("hiya")) {
-      addBotMessage(
-        "Hey there! 👋 Great to have you here.\n\nWhat can I help you with today?",
-        ["💰 Pricing", "🧲 Magnet types", "📦 Bulk orders", "🚚 Shipping"]
-      );
-      return;
-    }
-
-    // Thanks
-    if (m.includes("thank") || m.includes("thanks") || m.includes("cheers")) {
-      addBotMessage(
-        "You're so welcome! 🐼 Happy to help.\n\nIs there anything else I can assist you with?",
-        ["💰 Pricing", "📸 How to order", "🤝 Contact us"]
-      );
-      return;
-    }
-
-    // Fallback
-    addBotMessage(
-      "Great question! I want to make sure I give you the right answer. Here are some things I can help with:",
-      ["💰 Pricing", "🧲 Magnet types", "📦 Bulk orders", "🚚 Shipping", "📸 How to order", "🤝 Contact us"]
-    );
-  }
-
-  // ── Auto open after delay ─────────────────────────────
-
-  setTimeout(() => {
-    if (!chatBox.classList.contains("active") && badge) {
-      badge.style.display = "flex";
-    }
-  }, 4000);
-
-});
+}

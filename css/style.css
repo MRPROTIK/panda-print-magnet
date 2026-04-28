@@ -815,3 +815,118 @@ textarea:focus-visible {
   .brand-name { font-size: 0.78rem; }
   .brand img { width: 34px !important; height: 34px !important; }
 }
+/* ================================
+   PASTE THIS AT BOTTOM OF style.css
+================================ */
+
+/* Always show brand name on mobile */
+.brand-name {
+  display: inline !important;
+  white-space: nowrap;
+}
+
+/* Header right side - cart + hamburger */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Hamburger button - hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 999px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile dropdown menu */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 12px 20px 20px;
+  background: rgba(4, 10, 24, 0.98);
+  border-top: 1px solid rgba(103, 232, 249, 0.15);
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-menu a {
+  padding: 12px 0;
+  color: #f1f5f9;
+  font-weight: 700;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: color 0.2s ease;
+}
+
+.mobile-menu a:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+  color: #67e8f9;
+}
+
+.mobile-cart-link {
+  margin-top: 8px;
+  color: #67e8f9 !important;
+  font-weight: 900 !important;
+}
+
+/* Show hamburger on mobile, hide desktop nav */
+@media (max-width: 820px) {
+  .main-nav {
+    display: none !important;
+  }
+
+  .cart-link {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+@media (max-width: 400px) {
+  .brand-name {
+    font-size: 0.78rem;
+  }
+  .brand img {
+    width: 34px !important;
+    height: 34px !important;
+  }
+}

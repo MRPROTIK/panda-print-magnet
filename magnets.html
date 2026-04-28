@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Custom Photo Magnets | Panda Print Magnets</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+
+  <style>
+    .magnets-page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 90px 0;
+    }
+
+    .magnets-hero {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .magnets-hero .eyebrow {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #67e8f9;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .magnets-hero h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      color: #ffffff;
+    }
+
+    .magnets-hero p {
+      max-width: 680px;
+      margin: 0 auto;
+      color: #dbeafe;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    .trust-item {
+      padding: 18px;
+      border-radius: 22px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      color: #e2e8f0;
+      font-weight: 800;
+    }
+
+    .magnets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .magnet-card {
+      overflow: hidden;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(10, 18, 35, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .magnet-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(103, 232, 249, 0.45);
+    }
+
+    .magnet-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 20px;
+    }
+
+    .magnet-card h3 {
+      margin: 0 0 8px;
+      color: #ffffff;
+      font-size: 1.35rem;
+    }
+
+    .magnet-card p {
+      margin: 0 0 16px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .price {
+      display: block;
+      margin-bottom: 18px;
+      color: #67e8f9;
+      font-weight: 900;
+    }
+
+    .card-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .magnet-card .btn,
+    .cart-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .cart-btn {
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    .cart-btn:hover {
+      background: rgba(103, 232, 249, 0.22);
+    }
+
+    .info-section {
+      margin-top: 70px;
+      padding: 42px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(22px);
+      text-align: center;
+    }
+
+    .info-section h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #ffffff;
+    }
+
+    .info-section p {
+      max-width: 720px;
+      margin: 0 auto 24px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    @media (max-width: 900px) {
+      .magnets-grid,
+      .trust-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .magnets-page {
+        width: min(100% - 26px, 1180px);
+        padding: 60px 0;
+      }
+
+      .info-section {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="page-magnets">
+  <div id="site-header"></div>
+
+  <main class="magnets-page">
+    <section class="magnets-hero">
+      <span class="eyebrow">Premium photo magnets</span>
+      <h1>Custom Photo Magnets Made From Your Memories</h1>
+      <p>
+        Choose a style, upload your favorite photos, and create high-quality magnets
+        for your fridge, gifts, events, and family moments.
+      </p>
+    </section>
+
+    <section class="trust-row">
+      <div class="trust-item">✨ Premium glossy finish</div>
+      <div class="trust-item">🚚 Fast delivery</div>
+      <div class="trust-item">🎁 Perfect for gifts</div>
+    </section>
+
+    <section class="magnets-grid">
+      <article class="magnet-card">
+        <img src="assets/images/magnets/classic.jpg" alt="Classic photo magnet">
+        <h3>Classic Magnet</h3>
+        <p>Simple, clean, and perfect for everyday memories.</p>
+        <span class="price">From $9.99</span>
+
+        <div class="card-actions">
+          <a href="checkout.html?product=classic-magnet" class="btn">Customize</a>
+
+          <button class="cart-btn" onclick="addToCart({
+            id: 'classic-magnet',
+            name: 'Classic Magnet',
+            price: 9.99,
+            image: 'assets/images/magnets/classic.jpg'
+          })">
+            Add to Cart
+          </button>
+        </div>
+      </article>
+
+      <article class="magnet-card">
+        <img src="assets/images/magnets/collage.jpg" alt="Collage photo magnet">
+        <h3>Collage Magnet</h3>
+        <p>Combine multiple photos into one beautiful magnet design.</p>
+        <span class="price">From $14.99</span>
+
+        <div class="card-actions">
+          <a href="checkout.html?product=collage-magnet" class="btn">Customize</a>
+
+          <button class="cart-btn" onclick="addToCart({
+            id: 'collage-magnet',
+            name: 'Collage Magnet',
+            price: 14.99,
+            image: 'assets/images/magnets/collage.jpg'
+          })">
+            Add to Cart
+          </button>
+        </div>
+      </article>
+
+      <article class="magnet-card">
+        <img src="assets/images/magnets/event.jpg" alt="Event photo magnet">
+        <h3>Event Magnet</h3>
+        <p>Ideal for weddings, parties, school events, and celebrations.</p>
+        <span class="price">From $19.99</span>
+
+        <div class="card-actions">
+          <a href="checkout.html?product=event-magnet" class="btn">Customize</a>
+
+          <button class="cart-btn" onclick="addToCart({
+            id: 'event-magnet',
+            name: 'Event Magnet',
+            price: 19.99,
+            image: 'assets/images/magnets/event.jpg'
+          })">
+            Add to Cart
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <section class="info-section">
+      <h2>Need magnets for an event?</h2>
+      <p>
+        We can help with larger orders for weddings, businesses, schools,
+        charity events, and custom campaigns.
+      </p>
+      <a href="bulk-orders.html" class="btn">Explore Bulk Orders</a>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/chatbot.js"></script>
+
+  <script>
+    const CART_KEY = "pandaCart";
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    function addToCart(product) {
+      const cart = getCart();
+
+      const existingProduct = cart.find(item => item.id === product.id);
+
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: 1
+        });
+      }
+
+      saveCart(cart);
+
+      alert(product.name + " added to cart!");
+    }
+  </script>
+</body>
+</html>

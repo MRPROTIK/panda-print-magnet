@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Event Magnets | Panda Print Magnets</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+
+  <style>
+    .events-page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 90px 0;
+    }
+
+    .events-hero {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #67e8f9;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .events-hero h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      color: #ffffff;
+    }
+
+    .events-hero p {
+      max-width: 680px;
+      margin: 0 auto;
+      color: #dbeafe;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      margin-bottom: 80px;
+    }
+
+    .event-card {
+      overflow: hidden;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(10, 18, 35, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(103, 232, 249, 0.45);
+    }
+
+    .event-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 18px;
+    }
+
+    .event-card h3 {
+      margin: 0 0 8px;
+      color: #ffffff;
+      font-size: 1.35rem;
+    }
+
+    .event-card p {
+      margin: 0 0 18px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .event-card .btn {
+      width: 100%;
+    }
+
+    .steps-section {
+      margin-bottom: 80px;
+      padding: 44px;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    .steps-section h2 {
+      margin: 0 0 34px;
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #ffffff;
+      letter-spacing: -0.03em;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .step-card {
+      text-align: center;
+      padding: 26px;
+      border-radius: 26px;
+      background: rgba(10, 18, 35, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .step-number {
+      display: inline-flex;
+      width: 52px;
+      height: 52px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #7c3aed, #22d3ee);
+      font-weight: 900;
+      box-shadow: 0 18px 40px rgba(124, 58, 237, 0.32);
+    }
+
+    .step-card h3 {
+      margin: 0 0 8px;
+      color: #ffffff;
+    }
+
+    .step-card p {
+      margin: 0;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 58px 24px;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.35), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.28), transparent 34%),
+        rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .cta-section h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #ffffff;
+      letter-spacing: -0.03em;
+    }
+
+    .cta-section p {
+      max-width: 620px;
+      margin: 0 auto 26px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    @media (max-width: 900px) {
+      .events-grid,
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .events-page {
+        width: min(100% - 26px, 1180px);
+        padding: 60px 0;
+      }
+
+      .steps-section {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="page-events">
+  <div id="site-header"></div>
+
+  <main class="events-page">
+    <section class="events-hero">
+      <span class="eyebrow">Event keepsakes</span>
+      <h1>Magnets That Make Your Event Unforgettable</h1>
+      <p>
+        Create custom photo magnets for weddings, birthdays, corporate events,
+        school programs, fundraisers, and special celebrations.
+      </p>
+    </section>
+
+    <section class="events-grid">
+      <article class="event-card">
+        <img src="assets/images/events/wedding.jpg" alt="Wedding event magnet">
+        <h3>Weddings</h3>
+        <p>Save-the-date magnets, guest gifts, and keepsakes your guests will keep.</p>
+        <a href="checkout.html?product=wedding-event-magnet" class="btn">Customize</a>
+      </article>
+
+      <article class="event-card">
+        <img src="assets/images/events/birthday.jpg" alt="Birthday event magnet">
+        <h3>Birthdays</h3>
+        <p>Turn birthday memories into fun, personal magnets for family and friends.</p>
+        <a href="checkout.html?product=birthday-event-magnet" class="btn">Customize</a>
+      </article>
+
+      <article class="event-card">
+        <img src="assets/images/events/corporate.jpg" alt="Corporate event magnet">
+        <h3>Corporate Events</h3>
+        <p>Branded magnets for giveaways, launch events, client gifts, and teams.</p>
+        <a href="checkout.html?product=corporate-event-magnet" class="btn">Customize</a>
+      </article>
+    </section>
+
+    <section class="steps-section">
+      <h2>How Event Orders Work</h2>
+
+      <div class="steps-grid">
+        <article class="step-card">
+          <div class="step-number">1</div>
+          <h3>Share Your Event</h3>
+          <p>Tell us the event type, quantity, design idea, and deadline.</p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">2</div>
+          <h3>Customize the Design</h3>
+          <p>Choose your photo, layout, message, and magnet style.</p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">3</div>
+          <h3>Print & Deliver</h3>
+          <p>We prepare your magnets and deliver them ready for your event.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Planning a Bigger Event?</h2>
+      <p>
+        For weddings, schools, businesses, and fundraisers, bulk ordering gives you
+        better pricing and a smoother planning experience.
+      </p>
+      <a href="bulk-orders.html" class="btn">Request Bulk Pricing</a>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Our Story | Panda Print Magnets</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+
+  <style>
+    .story-page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 90px 0;
+    }
+
+    .story-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 90px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #5eead4;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .story-hero h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      color: #ffffff;
+    }
+
+    .story-hero p {
+      max-width: 620px;
+      margin: 0 0 28px;
+      color: #dbeafe;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .hero-image {
+      padding: 18px;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero-image img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+
+    .mission-card {
+      margin-bottom: 90px;
+      padding: 52px 28px;
+      text-align: center;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at top left, rgba(20, 184, 166, 0.28), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.22), transparent 36%),
+        rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    .mission-card h2,
+    .story-content h2,
+    .values-section h2,
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #ffffff;
+      letter-spacing: -0.03em;
+    }
+
+    .mission-card p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .story-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      margin-bottom: 90px;
+    }
+
+    .story-image img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 34px;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+      transform: rotate(-2deg);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .story-content p {
+      margin: 0 0 16px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .values-section {
+      margin-bottom: 90px;
+      text-align: center;
+    }
+
+    .values-intro {
+      max-width: 680px;
+      margin: 0 auto 36px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .value-card {
+      padding: 30px;
+      border-radius: 28px;
+      text-align: center;
+      background: rgba(10, 18, 35, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(94, 234, 212, 0.45);
+    }
+
+    .value-icon {
+      display: inline-flex;
+      width: 56px;
+      height: 56px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #14b8a6, #22d3ee);
+      box-shadow: 0 18px 40px rgba(20, 184, 166, 0.28);
+      font-size: 1.45rem;
+    }
+
+    .value-card h3 {
+      margin: 0 0 10px;
+      color: #ffffff;
+      font-size: 1.22rem;
+    }
+
+    .value-card p {
+      margin: 0;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .cta-card {
+      padding: 58px 24px;
+      text-align: center;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .cta-card p {
+      max-width: 620px;
+      margin: 0 auto 26px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    @media (max-width: 900px) {
+      .story-hero,
+      .story-section,
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .story-image img {
+        transform: rotate(0);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .story-page {
+        width: min(100% - 26px, 1180px);
+        padding: 60px 0;
+      }
+
+      .mission-card,
+      .cta-card {
+        padding: 36px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="page-story">
+  <div id="site-header"></div>
+
+  <main class="story-page">
+    <section class="story-hero">
+      <div>
+        <span class="eyebrow">Our story</span>
+        <h1>We Turn Everyday Memories Into Something You Can Hold</h1>
+        <p>
+          Panda Print Magnets started with one simple belief:
+          your best memories deserve more than a place on your phone.
+        </p>
+        <a href="magnets.html" class="btn">Start Creating</a>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/images/our-story/workshop.jpg" alt="Panda Print magnet workshop">
+      </div>
+    </section>
+
+    <section class="mission-card">
+      <h2>Built Around Memories</h2>
+      <p>
+        Photos are easy to take, but easy to forget. We help people turn special
+        moments into premium custom magnets that live in the home, spark conversations,
+        and keep meaningful memories visible every day.
+      </p>
+    </section>
+
+    <section class="story-section">
+      <div class="story-image">
+        <img src="assets/images/our-story/founder.jpg" alt="Founder story behind Panda Print">
+      </div>
+
+      <div class="story-content">
+        <h2>Where It All Began</h2>
+        <p>
+          Panda Print was created for families, event planners, schools, and small
+          businesses who wanted a simple way to make memories feel physical again.
+        </p>
+        <p>
+          What started as a small custom gift idea became a mission to create beautiful,
+          personal magnets for birthdays, weddings, classrooms, businesses, and community events.
+        </p>
+        <a href="events.html" class="btn">Explore Event Magnets</a>
+      </div>
+    </section>
+
+    <section class="values-section">
+      <h2>What We Believe</h2>
+      <p class="values-intro">
+        Every magnet should feel personal, premium, and easy to create.
+        That is the standard behind every part of Panda Print.
+      </p>
+
+      <div class="values-grid">
+        <article class="value-card">
+          <div class="value-icon">✨</div>
+          <h3>Quality First</h3>
+          <p>Clean printing, strong finish, and magnets made to last.</p>
+        </article>
+
+        <article class="value-card">
+          <div class="value-icon">📸</div>
+          <h3>Real Memories</h3>
+          <p>We focus on meaningful moments, not just another product.</p>
+        </article>
+
+        <article class="value-card">
+          <div class="value-icon">⚡</div>
+          <h3>Simple Experience</h3>
+          <p>Upload, customize, and order without unnecessary complexity.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-card">
+      <h2>Be Part of the Story</h2>
+      <p>
+        Create a custom magnet from your favorite photo and turn one memory
+        into something you see every day.
+      </p>
+      <a href="magnets.html" class="btn">Create Your Magnet</a>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

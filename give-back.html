@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Give Back | Panda Print Magnets</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+
+  <style>
+    .give-page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 90px 0;
+    }
+
+    .give-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 90px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #f9a8d4;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .give-hero h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      color: #ffffff;
+    }
+
+    .give-hero p {
+      max-width: 620px;
+      margin: 0 0 28px;
+      color: #dbeafe;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .hero-image {
+      padding: 18px;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero-image img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+
+    .mission-card {
+      margin-bottom: 90px;
+      padding: 52px 28px;
+      border-radius: 34px;
+      text-align: center;
+      background:
+        radial-gradient(circle at top left, rgba(236, 72, 153, 0.28), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.22), transparent 36%),
+        rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    .mission-card h2,
+    .impact-section h2,
+    .story-content h2,
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #ffffff;
+      letter-spacing: -0.03em;
+    }
+
+    .mission-card p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .story-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      margin-bottom: 90px;
+    }
+
+    .story-image img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 34px;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+      transform: rotate(-2deg);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .story-content p {
+      color: #cbd5e1;
+      font-weight: 650;
+      margin: 0 0 16px;
+    }
+
+    .impact-section {
+      margin-bottom: 90px;
+      text-align: center;
+    }
+
+    .impact-intro {
+      max-width: 680px;
+      margin: 0 auto 36px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .impact-card {
+      padding: 30px;
+      border-radius: 28px;
+      text-align: center;
+      background: rgba(10, 18, 35, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .impact-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(249, 168, 212, 0.5);
+    }
+
+    .impact-icon {
+      display: inline-flex;
+      width: 56px;
+      height: 56px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ec4899, #22d3ee);
+      box-shadow: 0 18px 40px rgba(236, 72, 153, 0.28);
+      font-size: 1.45rem;
+    }
+
+    .impact-card h3 {
+      margin: 0 0 10px;
+      color: #ffffff;
+      font-size: 1.22rem;
+    }
+
+    .impact-card p {
+      margin: 0;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    .cta-card {
+      padding: 58px 24px;
+      text-align: center;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .cta-card p {
+      max-width: 620px;
+      margin: 0 auto 26px;
+      color: #cbd5e1;
+      font-weight: 650;
+    }
+
+    @media (max-width: 900px) {
+      .give-hero,
+      .story-section,
+      .impact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .story-image img {
+        transform: rotate(0);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .give-page {
+        width: min(100% - 26px, 1180px);
+        padding: 60px 0;
+      }
+
+      .mission-card,
+      .cta-card {
+        padding: 36px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="page-giveback">
+  <div id="site-header"></div>
+
+  <main class="give-page">
+    <section class="give-hero">
+      <div>
+        <span class="eyebrow">Community first</span>
+        <h1>Every Magnet Helps Preserve More Than a Memory</h1>
+        <p>
+          Panda Print Magnets is built around memories, families, schools,
+          and communities. Our give-back mission supports the people and moments
+          behind every photo.
+        </p>
+        <a href="magnets.html" class="btn">Create With Purpose</a>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/images/give-back/community.jpg" alt="Community gathering supported by Panda Print">
+      </div>
+    </section>
+
+    <section class="mission-card">
+      <h2>Our Heart for Community</h2>
+      <p>
+        We believe memories are not just products. They are family stories,
+        school milestones, local events, and moments people want to keep close.
+        That is why we support community projects, fundraisers, and meaningful causes.
+      </p>
+    </section>
+
+    <section class="story-section">
+      <div class="story-image">
+        <img src="assets/images/give-back/family.jpg" alt="Family memory photo magnet story">
+      </div>
+
+      <div class="story-content">
+        <h2>Why We Give</h2>
+        <p>
+          Panda Print was created to make personal memories feel physical again.
+          A small magnet can turn a moment into something visible every day.
+        </p>
+        <p>
+          Through our give-back mission, we want to help families, schools,
+          non-profits, and local organizers turn meaningful moments into lasting keepsakes.
+        </p>
+        <a href="events.html" class="btn">Explore Event Magnets</a>
+      </div>
+    </section>
+
+    <section class="impact-section">
+      <h2>Small Magnets, Big Impact</h2>
+      <p class="impact-intro">
+        From school fundraisers to family support and community events,
+        every order helps create something that lasts beyond the day it happens.
+      </p>
+
+      <div class="impact-grid">
+        <article class="impact-card">
+          <div class="impact-icon">🏫</div>
+          <h3>School Fundraisers</h3>
+          <p>Helping schools raise money with useful, personal custom magnets.</p>
+        </article>
+
+        <article class="impact-card">
+          <div class="impact-icon">💛</div>
+          <h3>Family Support</h3>
+          <p>Helping families preserve memories during meaningful life moments.</p>
+        </article>
+
+        <article class="impact-card">
+          <div class="impact-icon">🤝</div>
+          <h3>Community Events</h3>
+          <p>Supporting local markets, gatherings, causes, and celebrations.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-card">
+      <h2>Every Order Makes a Difference</h2>
+      <p>
+        Create something beautiful for your home, event, school, or business —
+        while helping support a mission built around real people.
+      </p>
+      <a href="bulk-orders.html" class="btn">Start a Community Order</a>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

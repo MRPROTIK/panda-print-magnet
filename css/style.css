@@ -1,6 +1,6 @@
 /* ================================
    Panda Print Magnets
-   10/10 Premium Global CSS
+   Fully Mobile Optimized CSS
 ================================ */
 
 * {
@@ -76,7 +76,9 @@ textarea {
   margin: 0 auto;
 }
 
-/* Buttons */
+/* ================================
+   Buttons
+================================ */
 
 .btn {
   position: relative;
@@ -119,12 +121,14 @@ textarea {
     0 0 44px rgba(34, 211, 238, 0.36);
 }
 
-/* Header */
+/* ================================
+   Header
+================================ */
 
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
   padding: 14px 0;
   background:
     linear-gradient(90deg, rgba(2, 6, 23, 0.97), rgba(8, 13, 28, 0.95), rgba(3, 25, 39, 0.97));
@@ -161,46 +165,53 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
   min-height: 66px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
 }
+
+/* Brand */
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 10px;
+  padding: 7px 12px;
   border-radius: 22px;
   color: #ffffff;
   font-weight: 950;
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   letter-spacing: 0.02em;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.1),
     0 14px 32px rgba(0,0,0,0.18);
+  flex-shrink: 0;
 }
 
 .brand img {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  border-radius: 15px;
+  border-radius: 13px;
   background: #ffffff;
-  padding: 5px;
+  padding: 4px;
   box-shadow:
     0 14px 36px rgba(34, 211, 238, 0.25),
     0 0 0 1px rgba(255,255,255,0.45);
 }
 
+/* Desktop Nav */
+
 .main-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
   justify-content: center;
   flex: 1;
-  padding: 6px;
+  padding: 5px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255,255,255,0.07);
@@ -211,19 +222,20 @@ textarea {
   position: relative;
   color: #f8fafc;
   font-weight: 850;
-  font-size: 0.96rem;
+  font-size: 0.92rem;
   letter-spacing: 0.02em;
-  padding: 9px 13px;
+  padding: 8px 12px;
   border-radius: 999px;
   transition: color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+  white-space: nowrap;
 }
 
 .main-nav a::after {
   content: "";
   position: absolute;
-  left: 13px;
-  right: 13px;
-  bottom: 5px;
+  left: 12px;
+  right: 12px;
+  bottom: 4px;
   height: 2px;
   border-radius: 999px;
   background: linear-gradient(90deg, #7c3aed, #22d3ee);
@@ -239,10 +251,18 @@ textarea {
   background: rgba(103, 232, 249, 0.1);
 }
 
-.main-nav a:hover::after {
+.main-nav a:hover::after,
+.main-nav a.active::after {
   opacity: 1;
   transform: scaleX(1);
 }
+
+.main-nav a.active {
+  background: rgba(103, 232, 249, 0.15);
+  color: #67e8f9;
+}
+
+/* Cart Link */
 
 .cart-link {
   position: relative;
@@ -251,9 +271,12 @@ textarea {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  padding: 13px 22px;
+  padding: 11px 20px;
   color: #ffffff;
   font-weight: 950;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  flex-shrink: 0;
   background: linear-gradient(135deg, #7c3aed, #22d3ee);
   box-shadow:
     0 18px 42px rgba(34, 211, 238, 0.28),
@@ -278,7 +301,124 @@ textarea {
   transform: translateY(-2px) scale(1.02);
 }
 
-/* Hero readability upgrade */
+/* ================================
+   Hamburger Menu Button
+================================ */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.25s ease;
+  padding: 0;
+}
+
+.hamburger:hover {
+  background: rgba(103, 232, 249, 0.15);
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: #ffffff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ================================
+   Mobile Nav Drawer
+================================ */
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(2, 6, 23, 0.98);
+  backdrop-filter: blur(30px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 100px 30px 50px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.mobile-nav.open {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.mobile-nav a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 16px 24px;
+  border-radius: 18px;
+  color: #f8fafc;
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a.active {
+  background: rgba(103, 232, 249, 0.15);
+  border-color: rgba(103, 232, 249, 0.35);
+  color: #67e8f9;
+  transform: scale(1.02);
+}
+
+.mobile-nav .mobile-cart {
+  margin-top: 12px;
+  background: linear-gradient(135deg, #7c3aed, #22d3ee);
+  border: none;
+  color: #ffffff;
+  font-size: 1.15rem;
+}
+
+.mobile-nav .mobile-cart:hover {
+  background: linear-gradient(135deg, #6d28d9, #06b6d4);
+  color: #ffffff;
+}
+
+/* ================================
+   Hero Sections
+================================ */
 
 .hero,
 .home-hero,
@@ -312,7 +452,24 @@ textarea {
   z-index: 1;
 }
 
-/* Footer */
+.hero h1,
+.home-hero h1,
+.page-hero h1 {
+  text-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.65),
+    0 0 22px rgba(34, 211, 238, 0.12);
+}
+
+.hero,
+.home-hero,
+.page-hero {
+  background-size: cover;
+  background-position: center;
+}
+
+/* ================================
+   Footer
+================================ */
 
 .site-footer {
   position: relative;
@@ -359,6 +516,8 @@ textarea {
   gap: 60px;
   align-items: start;
   padding: 0 0 34px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
 }
 
 .footer-brand {
@@ -368,9 +527,9 @@ textarea {
 }
 
 .footer-brand img {
-  width: 76px;
+  width: 72px;
   padding: 6px;
-  border-radius: 20px;
+  border-radius: 18px;
   background: #ffffff;
   box-shadow: 0 18px 45px rgba(34, 211, 238, 0.22);
 }
@@ -379,7 +538,7 @@ textarea {
   max-width: 300px;
   margin: 0;
   color: rgba(226, 232, 240, 0.86);
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   font-weight: 600;
 }
 
@@ -392,14 +551,14 @@ textarea {
 .footer-links h3 {
   margin: 0 0 12px;
   color: #67e8f9;
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .footer-links a {
   color: rgba(248, 250, 252, 0.88);
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   font-weight: 750;
   transition: color 0.22s ease, transform 0.22s ease;
 }
@@ -418,11 +577,13 @@ textarea {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   text-align: center;
   color: rgba(241, 245, 249, 0.76);
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   font-weight: 650;
 }
 
-/* Premium polish for cards across pages */
+/* ================================
+   Card Polish
+================================ */
 
 .magnet-card,
 .cart-card,
@@ -457,7 +618,9 @@ textarea {
   border-color: rgba(103, 232, 249, 0.34);
 }
 
-/* Focus states */
+/* ================================
+   Focus States
+================================ */
 
 a:focus-visible,
 button:focus-visible,
@@ -468,18 +631,18 @@ textarea:focus-visible {
   outline-offset: 3px;
 }
 
-/* Responsive */
+/* ================================
+   RESPONSIVE — Tablet (≤ 980px)
+================================ */
 
 @media (max-width: 980px) {
-  .header-inner {
-    flex-wrap: wrap;
-    justify-content: center;
+  .main-nav,
+  .cart-link {
+    display: none;
   }
 
-  .main-nav {
-    width: 100%;
-    gap: 8px;
-    border-radius: 26px;
+  .hamburger {
+    display: flex;
   }
 
   .footer-grid {
@@ -488,41 +651,44 @@ textarea:focus-visible {
   }
 }
 
+/* ================================
+   RESPONSIVE — Mobile (≤ 680px)
+================================ */
+
 @media (max-width: 680px) {
   .container,
   .footer-note {
-    width: min(100% - 26px, 1180px);
+    width: calc(100% - 26px);
   }
 
   .site-header {
-    padding: 12px 0;
+    padding: 10px 0;
+  }
+
+  .header-inner {
+    width: calc(100% - 26px);
+    min-height: 58px;
   }
 
   .brand {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    gap: 8px;
   }
 
   .brand img {
-    width: 42px;
-    height: 42px;
-  }
-
-  .main-nav {
-    gap: 6px;
-    padding: 8px;
-  }
-
-  .main-nav a {
-    font-size: 0.86rem;
-    padding: 8px 10px;
-  }
-
-  .cart-link {
-    padding: 11px 18px;
+    width: 36px;
+    height: 36px;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .site-footer {
+    padding: 50px 0 24px;
+    margin-top: 60px;
   }
 
   .hero::before,
@@ -531,35 +697,17 @@ textarea:focus-visible {
     background:
       linear-gradient(
         180deg,
-        rgba(2, 6, 23, 0.88) 0%,
-        rgba(2, 6, 23, 0.62) 55%,
-        rgba(2, 6, 23, 0.34) 100%
+        rgba(2, 6, 23, 0.92) 0%,
+        rgba(2, 6, 23, 0.72) 55%,
+        rgba(2, 6, 23, 0.45) 100%
       );
   }
 }
+
 /* ================================
-   Final Client Demo Polish
+   Prevent body scroll when menu open
 ================================ */
 
-/* Hero text cinematic depth */
-.hero h1,
-.home-hero h1,
-.page-hero h1 {
-  text-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.65),
-    0 0 22px rgba(34, 211, 238, 0.12);
-}
-
-/* Better hero image position */
-.hero,
-.home-hero,
-.page-hero {
-  background-size: cover;
-  background-position: center;
-}
-
-/* Active nav item */
-.main-nav a.active {
-  background: rgba(103, 232, 249, 0.15);
-  color: #67e8f9;
+body.nav-open {
+  overflow: hidden;
 }

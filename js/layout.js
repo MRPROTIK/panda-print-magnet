@@ -7,7 +7,7 @@ const headerHTML = `
     </a>
 
     <nav class="main-nav">
-      <a href="index.html">Home</a>
+      <a href="index.html" class="active">Home</a>
       <a href="magnets.html">Magnets</a>
       <a href="bulk-orders.html">Bulk Orders</a>
       <a href="events.html">Events</a>

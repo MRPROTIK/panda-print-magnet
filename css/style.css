@@ -537,3 +537,29 @@ textarea:focus-visible {
       );
   }
 }
+/* ================================
+   Final Client Demo Polish
+================================ */
+
+/* Hero text cinematic depth */
+.hero h1,
+.home-hero h1,
+.page-hero h1 {
+  text-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.65),
+    0 0 22px rgba(34, 211, 238, 0.12);
+}
+
+/* Better hero image position */
+.hero,
+.home-hero,
+.page-hero {
+  background-size: cover;
+  background-position: center;
+}
+
+/* Active nav item */
+.main-nav a.active {
+  background: rgba(103, 232, 249, 0.15);
+  color: #67e8f9;
+}

@@ -1,18 +1,14 @@
-/* ================================
-   Panda Print — Premium AI Chatbot
-================================ */
+/* Chat Toggle Button */
 
-/* Chat Button */
-
-.chatbot-btn {
+.chat-toggle {
   position: fixed;
   bottom: 26px;
   right: 26px;
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  cursor: pointer;
   z-index: 999;
+  cursor: pointer;
 
   display: flex;
   align-items: center;
@@ -23,13 +19,14 @@
     0 20px 50px rgba(34, 211, 238, 0.35),
     0 0 25px rgba(124, 58, 237, 0.35);
 
-  transition: all 0.3s ease;
   animation: floatBtn 4s ease-in-out infinite;
 }
 
-/* Glow pulse */
-.chatbot-btn::before {
-  content: "";
+.chat-toggle svg {
+  z-index: 2;
+}
+
+.chat-toggle .chat-pulse {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
@@ -38,39 +35,19 @@
   filter: blur(14px);
 }
 
-/* Inner icon */
-.chatbot-btn span {
-  font-size: 26px;
-}
+/* Chat Box */
 
-/* Hover effect */
-.chatbot-btn:hover {
-  transform: scale(1.08) translateY(-3px);
-  box-shadow:
-    0 25px 60px rgba(34, 211, 238, 0.5),
-    0 0 40px rgba(124, 58, 237, 0.45);
-}
-
-/* Floating animation */
-@keyframes floatBtn {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-}
-
-/* Chat Window */
-
-.chatbot-box {
+.chat-box {
   position: fixed;
   bottom: 100px;
   right: 26px;
   width: 340px;
   max-height: 480px;
-
   border-radius: 26px;
-  overflow: hidden;
+
   display: none;
   flex-direction: column;
+  overflow: hidden;
 
   background: rgba(8, 13, 28, 0.95);
   backdrop-filter: blur(26px);
@@ -82,53 +59,102 @@
     0 0 40px rgba(34, 211, 238, 0.15);
 }
 
+.chat-box.active {
+  display: flex;
+}
+
 /* Header */
 
-.chatbot-header {
-  padding: 16px 18px;
-  font-weight: 900;
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
   background: linear-gradient(135deg, #7c3aed, #22d3ee);
   color: white;
 }
 
-/* Messages */
-
-.chatbot-messages {
-  flex: 1;
-  padding: 16px;
-  overflow-y: auto;
-  font-size: 0.9rem;
-  color: #e2e8f0;
+.chat-agent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Message bubbles */
+.agent-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.bot-msg,
-.user-msg {
+.online-dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* Messages */
+
+.chat-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+}
+
+/* Messages style */
+
+.chat-message {
   padding: 10px 14px;
   border-radius: 14px;
   margin-bottom: 10px;
   max-width: 80%;
+  font-size: 0.9rem;
 }
 
-.bot-msg {
-  background: rgba(255, 255, 255, 0.08);
+.chat-message.bot {
+  background: rgba(255,255,255,0.08);
 }
 
-.user-msg {
+.chat-message.user {
   background: linear-gradient(135deg, #7c3aed, #22d3ee);
   margin-left: auto;
   color: white;
 }
 
+/* Typing animation */
+
+.typing span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #cbd5e1;
+  border-radius: 50%;
+  margin-right: 3px;
+  animation: bounce 1.2s infinite;
+}
+
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
 /* Input */
 
-.chatbot-input {
+.chat-input-area {
   display: flex;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.chatbot-input input {
+.chat-input-area input {
   flex: 1;
   padding: 12px;
   border: none;
@@ -137,10 +163,37 @@
   color: white;
 }
 
-.chatbot-input button {
+.chat-input-area button {
   padding: 12px 16px;
   border: none;
   cursor: pointer;
   background: linear-gradient(135deg, #7c3aed, #22d3ee);
   color: white;
+}
+
+/* Quick buttons */
+
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.quick-replies button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Floating */
+
+@keyframes floatBtn {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
 }

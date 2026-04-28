@@ -247,7 +247,7 @@ button, input, select, textarea { font: inherit; }
 ================================ */
 
 .mobile-nav {
-  display: none;
+  display: flex;
   position: fixed;
   inset: 0;
   z-index: 99;
@@ -259,14 +259,15 @@ button, input, select, textarea { font: inherit; }
   gap: 0;
   padding: 80px 28px 40px;
   opacity: 0;
+  visibility: hidden;
   transform: translateY(-16px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
   pointer-events: none;
 }
 
 .mobile-nav.open {
-  display: flex;
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
   pointer-events: all;
 }

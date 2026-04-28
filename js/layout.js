@@ -3,11 +3,11 @@ const headerHTML = `
   <div class="container header-inner">
     <a class="brand" href="index.html">
       <img src="assets/images/Pandaprintmagnet.png" alt="Panda Print Magnets logo">
-      <span>Panda Print Magnets</span>
+      <span class="brand-name">Panda Print Magnets</span>
     </a>
 
     <nav class="main-nav">
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="magnets.html">Magnets</a>
       <a href="bulk-orders.html">Bulk Orders</a>
       <a href="events.html">Events</a>
@@ -63,4 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (headerMount) headerMount.innerHTML = headerHTML;
   if (footerMount) footerMount.innerHTML = footerHTML;
+
+  // Mark active nav link
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".main-nav a").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href === currentPage || (currentPage === "" && href === "index.html")) {
+      link.classList.add("active");
+    }
+  });
 });

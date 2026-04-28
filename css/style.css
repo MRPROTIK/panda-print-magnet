@@ -806,3 +806,12 @@ textarea:focus-visible {
     padding: 6px 8px;
   }
 }
+/* Brand name always visible on mobile */
+.brand-name {
+  display: inline !important;
+  white-space: nowrap;
+}
+@media (max-width: 400px) {
+  .brand-name { font-size: 0.78rem; }
+  .brand img { width: 34px !important; height: 34px !important; }
+}
